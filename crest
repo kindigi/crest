@@ -176,11 +176,11 @@ then
 # and let it handle the request. These are commands which can be run
 # without sudo and don't require taking over terminals like Ngrok.
 else
-    if [[ "$EUID" -ne 0 ]]
-    then
-        sudo USER="$USER" --preserve-env "$SOURCE" "$@"
-        exit
-    fi
+#    if [[ "$EUID" -ne 0 ]]
+#    then
+#        sudo USER="$USER" --preserve-env "$SOURCE" "$@"
+#        exit
+#    fi
 
     "$PHP" "$DIR/cli/crest.php" "$@"
 fi

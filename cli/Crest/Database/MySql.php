@@ -92,21 +92,18 @@ class MySql extends DatabaseAbstract
     public function restart()
     {
         $version = $this->installedVersion();
-        info("Restarting $version...");
 
         if ($version) {
-            $this->cli->quietlyAsUser('brew services restart '.$version);
+            $this->brew->restartService($version);
         }
     }
 
     public function stop(): void
     {
         $version = $this->installedVersion();
-        info("Stopping $version...");
 
         if ($version) {
-            $this->cli->quietly('sudo brew services stop '.$version);
-            $this->cli->quietlyAsUser('brew services stop '.$version);
+            $this->brew->stopService($version);
         }
     }
 
