@@ -294,7 +294,7 @@ class MySql extends DatabaseAbstract
     {
         info("Updating $formula configuration...");
 
-        $this->files->ensureDirExists(BREW_PREFIX.'/'.self::MYSQL_CONFIG_DIR);
+        $this->files->ensureDirExists(BREW_PREFIX.'/'.self::MYSQL_CONFIG_DIR, user());
 
         $content = $this->files->get(__DIR__."/../../stubs/mysql/$formula.cnf");
         $content = str_replace(
