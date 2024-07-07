@@ -193,3 +193,9 @@ function user(): string
 
     return $_SERVER['SUDO_USER'];
 }
+
+function group(): string
+{
+    // Get the group of the user. like: 'staff', 'admin', 'wheel', etc.
+    return (new CommandLine())->runAsUser('id -gn');
+}
