@@ -21,10 +21,6 @@ class PhpMyAdmin
 
         $this->site->link(self::PHPMYADMIN_PATH, $name);
 
-        $url = $this->site->domain($name);
-
-        $this->site->secure($url, null, 368);
-
         $this->setConfig('blowfish_secret', $this->generateBlowFish());
 
         $this->brew->restartService($this->brew->nginxServiceName());

@@ -55,12 +55,12 @@ class MySql extends DatabaseAbstract
         $installedVersion = $this->installedVersion();
 
         if (!$installedVersion){
-            $this->brew->installOrFail($formula);
+            $this->cli->quietlyAsUser("brew install $formula");
         }
 
         $this->stop();
-        $this->installConfiguration($formula);
-        $this->ensureDirectoryOwnership();
+//        $this->installConfiguration($formula);
+//        $this->ensureDirectoryOwnership();
         $this->restart();
 
         if (str_contains($formula, '@')) {
@@ -94,7 +94,7 @@ class MySql extends DatabaseAbstract
         $version = $this->installedVersion();
 
         if ($version) {
-            $this->brew->restartService($version);
+            $this->cli->quietlyAsUser("brew services restart $version");
         }
     }
 
@@ -103,7 +103,8 @@ class MySql extends DatabaseAbstract
         $version = $this->installedVersion();
 
         if ($version) {
-            $this->brew->stopService($version);
+            $this->cli->quietly("sudo brew services stop $version");
+            $this->cli->quietlyAsUser("brew services stop $version");
         }
     }
 

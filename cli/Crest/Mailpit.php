@@ -19,8 +19,7 @@ class Mailpit
 
         $this->site->proxyCreate(
             url: "mails",
-            host: 'http://localhost:8025',
-            secure: true
+            host: 'http://localhost:8025'
         );
     }
 
