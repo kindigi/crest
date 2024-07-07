@@ -155,7 +155,7 @@ class Brew
             $this->tap($taps);
         }
 
-        output('<info>['.$formula.'] is not installed, installing it now via Brew...</info> 🍻');
+        info("$formula is not installed, installing it now via Brew... 🍻");
 
         if ($this->limitedPhpVersions()->contains($formula)) {
             $formula = 'shivammathur/php/'.$formula;
@@ -190,7 +190,7 @@ class Brew
 
         foreach ($services as $service) {
             if ($this->installed($service)) {
-                \Laravel\Prompts\info("Restarting {$service}...");
+                info("Restarting {$service}...");
 
                 // first we ensure that the service is not incorrectly running as non-root
                 $this->cli->quietly('brew services stop '.$service);

@@ -55,12 +55,10 @@ class MySql extends DatabaseAbstract
         $installedVersion = $this->installedVersion();
 
         if (!$installedVersion){
-            $this->cli->quietlyAsUser("brew install $formula");
+            $this->brew->installOrFail($formula);
         }
 
-        $this->stop();
-//        $this->installConfiguration($formula);
-//        $this->ensureDirectoryOwnership();
+        $this->createConfigurationFiles($formula);
         $this->restart();
 
         if (str_contains($formula, '@')) {
@@ -92,9 +90,12 @@ class MySql extends DatabaseAbstract
     public function restart()
     {
         $version = $this->installedVersion();
-
         if ($version) {
-            $this->cli->quietlyAsUser("brew services restart $version");
+            info("Restarting $version...");
+
+            $this->cli->quietly("sudo brew services stop $version");
+            $this->cli->quietlyAsUser("brew services stop $version");
+            $this->cli->quietlyAsUser("brew services start $version");
         }
     }
 
@@ -103,6 +104,8 @@ class MySql extends DatabaseAbstract
         $version = $this->installedVersion();
 
         if ($version) {
+            info("Stopping $version...");
+
             $this->cli->quietly("sudo brew services stop $version");
             $this->cli->quietlyAsUser("brew services stop $version");
         }
@@ -288,7 +291,7 @@ class MySql extends DatabaseAbstract
         }
     }
 
-    private function installConfiguration($formula): void
+    private function createConfigurationFiles($formula): void
     {
         info("Updating $formula configuration...");
 
@@ -438,13 +441,5 @@ class MySql extends DatabaseAbstract
     private function isSystemDatabase(string $database): bool
     {
         return in_array($database, static::SYSTEM_DATABASES);
-    }
-
-    private function ensureDirectoryOwnership(): void
-    {
-        $user = user();
-        $mysqlDataDir = BREW_PREFIX . '/' . self::MYSQL_DATA_DIR;
-        $this->cli->quietly("sudo chown -R $user:staff $mysqlDataDir");
-        $this->cli->quietly("sudo chmod -R 755 $mysqlDataDir");
     }
 }

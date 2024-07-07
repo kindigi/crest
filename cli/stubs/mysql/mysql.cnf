@@ -1,12 +1,6 @@
 [mysqld]
-bind-address=127.0.0.1
-mysqlx-bind-address=127.0.0.1
-default_authentication_plugin=mysql_native_password
-
-[client]
-user=root
-password=
-host=localhost
+bind-address = 127.0.0.1
+mysqlx-bind-address = 127.0.0.1
 
 [mysqldump]
 column-statistics=0

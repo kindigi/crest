@@ -45,6 +45,9 @@
         "yoast/phpunit-polyfills": "^0.2.0",
         "laravel/pint": "^1.4"
     },
+    "suggest": {
+        "ext-pdo": "Required to use the Database driver."
+    },
     "bin": [
         "crest"
     ],
